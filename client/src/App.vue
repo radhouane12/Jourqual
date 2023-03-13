@@ -25,19 +25,27 @@
             <td>
               <form>
                 <label class="radio-inline">
-                  <input type="radio" name="optradio" checked> A &nbsp
+                  <input type="radio" name="optradio" value="A" checked> A &nbsp
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" name="optradio"> B &nbsp
+                  <input type="radio" name="optradio" value="B"> B &nbsp
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" name="optradio"> C &nbsp
+                  <input type="radio" name="optradio" value="C"> C &nbsp
                 </label>
               </form>
             </td>
           </tr>
         </tbody>
       </v-table>
+    </v-row>
+    <v-row class="mt-5" >
+      <v-btn variant="outlined" @click="submit()">
+        Submit
+      </v-btn>
+    </v-row>
+    <v-row class="mt-5" v-if="this.reviews.length > 0">
+      {{ this.reviews }}
     </v-row>
   </v-container>
 </template>
@@ -46,7 +54,7 @@ export default {
   data() {
     return {
       wissKomm: 'option 1',
-      //Dynamically generate publications according to wissenschaftliche kommission
+      reviews: []
     }
   },
   computed: {
@@ -87,7 +95,6 @@ export default {
           },
           {
             name: 'pub 11',
-            
           },
           {
             name: 'pub 12',
@@ -96,6 +103,14 @@ export default {
     },
   },
   methods: {
+    submit() {
+      let radios = document.querySelectorAll('input[name="optradio"]:checked')
+      let answers=[]
+      for (let i=0; i<radios.length; i++){
+        this.reviews.push({"publication":this.publications[i].name,"Qualität":radios[i].value})
+      }
+      console.log(this.reviews)
+    }
   }
 }
 </script>
